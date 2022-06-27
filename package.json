@@ -1,0 +1,16 @@
+{
+  "name": "chat-socket",
+  "version": "1.0.0",
+  "description": "1. Crear un chat\r 2. Un usuario se conectará a http://localhost:3000; y le enviaremos un HTML que va a ser el \"cliente\" (aplicación Web para poder enviar mensajes)\r 3. Cada vez que el usuario envie un mensaje, este será retransmitido a los demás usuarios",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "socket.io": "^4.5.1"
+  }
+}
