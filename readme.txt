@@ -14,3 +14,18 @@ Crear una comunicación para nosotros transperente entre cliente y servidor, y v
 - Se ha producido un evento de tipo 'nuevo mensaje'
 - Se ha producido un evento de tipo 'usuario conectado'
 - Se ha producido un evento de tipo 'usuario desconectado'
+
+improvements
+------------
+1. Broadcast a message to connected users when someone connects or disconnects.
+1.1. Change message format to: ${idUser} ${message} ${Date()}
+1.2. Ban bad words (check) https://www.npmjs.com/package/bad-words-es
+2. Add support for nicknames.
+  2.1 change nick color
+3. Add “{user} is typing” functionality.
+4. List Show who’s online.
+   4.1 Block user
+5. Add private messaging.
+6. Encrypt messages between parties
+7. Don’t send the same message to the user that sent it. Instead, append the message directly as soon as he/she presses enter.
+8. Any other improvements

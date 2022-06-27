@@ -7,7 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messager Returns</title>
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-
+    <style>
+        .message__connection {
+            font-style: italic;
+            font-weight: 200;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,6 +35,7 @@
                 // primer parámetro es un tipo de evento que personalizamos y definimos nosotros 
                 // Después, un número arbitrario de argumentos para pasar información al servidor
                 socket.emit('chat message', input.value);
+
                 input.value = '';
             }
         });
@@ -40,6 +46,25 @@
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });
+
+
+        // Escuchar los eventos de tipo 'user connected' y que lo añada en la lista de mensajes
+        socket.on('user connected', function (userId) {
+            var item = document.createElement('li');
+            item.classList.add('message__connection');
+            item.textContent = `User with id ${userId} is connected.`;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        socket.on('user disconnected', function (userId) {
+            var item = document.createElement('li');
+            item.classList.add('message__connection');
+            item.textContent = `User with id ${userId} has been disconnected.`;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+
     </script>
 </body>
 
