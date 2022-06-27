@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
+var Filter = require('bad-words-es');
+filter = new Filter();
+
+const usernames = {};
 
 // importar el paquete de terceros socket.io, y nos quedamos únicamente con el objeto 'Server'
 const { Server } = require("socket.io");
@@ -18,6 +22,11 @@ io.on('connection', (socket) => {
     // la propiedad id es el identificador único de cliente que Socket.io ha otorgado al cliente que se ha conectado
     console.log(socket.id);
 
+    socket.on('change nickname', (username) => {
+        usernames[socket.id] = username;
+        console.log(usernames)
+    })
+
     socket.on('disconnect', () => {
         io.emit('user disconnected', socket.id);
     })
@@ -29,7 +38,9 @@ io.on('connection', (socket) => {
 
     socket.on('chat message', (msg) => {
         // quiero emitir un mensaje a todo el mundo que este sea exactamente el mismo que he recibido de otro usuario
-        io.emit('chat message', msg);
+        // Ahora el mensaje va con el nickname 
+        let message = `${usernames[socket.id]}: ${filter.clean(msg)}`;
+        io.emit('chat message', message);
     });
 });
 

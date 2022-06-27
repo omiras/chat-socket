@@ -17,6 +17,7 @@
 
 <body>
     <h2>Mensajes</h2>
+    <h3 id="nickname">Nickname actual <span style="color:chocolate"></span></h3>
     <ul id="messages"></ul>
     <form id="form" action="">
         <label for="input">Enviar mensaje: </label>
@@ -25,6 +26,11 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io();
+
+        var username = prompt("Escribe tu nickname:");
+        socket.emit('change nickname', username)
+
+        document.querySelector("#nickname span").textContent = username;
 
         var form = document.getElementById('form');
         var input = document.getElementById('input');
@@ -42,7 +48,9 @@
 
         socket.on('chat message', function (msg) {
             var item = document.createElement('li');
-            item.textContent = msg;
+            const d = new Date();
+            let date = d.toLocaleString();
+            item.innerHTML = `<span>${msg}<span> ---- <span style="font-size: 0.9rem">${date}</span>`;
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });
